@@ -12,16 +12,16 @@
             padding: 0
         }
 
-        body {
-            /* background-color: #5A7495; */
-        }
+      
 
         .page {
             position: relative;
             width: 100vw;
             height: 100vh;
         }
-
+        .sky {
+            
+        }
         .cloud {
             background-color: #f9f9f9;
             border-radius: 100px;
@@ -56,13 +56,7 @@
             top: -34px;
             width: 55px;
         }
-
-        .night {
-            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#00002F));
-            transition: all 1s;
-            display: none;
-        }
-
+        /* 晴天 */
         @keyframes starMS {
             0% {
                 opacity: 1;
@@ -77,32 +71,26 @@
             }
         }
 
-        .night .star {
+        .sky .star {
             position: absolute;
             transition: all 100s linear;
             /* animation:  1s linear 0 infinite alternate starMS; */
 
         }
 
-        .night .star:nth-child(3n+1) {
+        .sky .star:nth-child(3n+1) {
             animation: starMS 4s linear 0s infinite alternate both;
         }
 
-        .night .star:nth-child(3n+2) {
+        .sky .star:nth-child(3n+2) {
             animation: starMS 4s linear 1s infinite alternate both;
         }
 
-        .night .star:nth-child(3n) {
+        .sky .star:nth-child(3n) {
             animation: starMS 4s linear 2s infinite alternate both;
         }
 
         /* 下雨 */
-        .sky {
-            /* background-color: #5A7495; */
-            background: linear-gradient(#8e97a2, #5A7495);;
-            
-        }
-
         .drop {
             position: absolute;
             width: 1px;
@@ -118,9 +106,11 @@
                 top: -10vh;
                 opacity: .35;
             }
+
             70% {
                 opacity: .3;
             }
+
             100% {
                 top: 110vh;
                 opacity: .2;
@@ -151,16 +141,31 @@
 
 <body>
     <div class="cloud"></div>
-    <div class="night page">
-    </div>
     <div class="sky page">
 
     </div>
     <script>
-        rain()
-        function night() {
-            var night = document.querySelector('.night');
-            night.style.display = 'block';
+        //状态表示
+        // 白天：day 晚上：night 
+        // 晴天：normal 多云：cloud 雨天：rain 雪：snow 
+        
+        // 白天下雨
+        //rain('day')
+        //晚上下雨
+        //rain('night')
+
+        //晚上晴天
+        //normal('night')
+        //白天晴天
+        normal('day')
+        function normal(time) {
+            var sky = document.querySelector('.sky');
+            if(time==='night'){
+                sky.style.background =  '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#00002F))';
+            }else if(time==='day'){
+                sky.style.backgroundColor =  'rgb(72,145,190)';
+            }
+            
             var starts = 52;
             for (var i = 0; i < starts; i++) {
                 var div = document.createElement('div');
@@ -172,24 +177,22 @@
                 div.style.backgroundColor = '#fff';
                 div.style.top = Math.random() * 100 + '%';
                 div.style.left = Math.random() * 100 + '%';
-                night.appendChild(div)
-
+                sky.appendChild(div)
             }
             var starList = document.querySelectorAll('.star');
-            // setTimeout(() => {
-            //     var starList = document.querySelectorAll('.star');
-            //     Array.prototype.forEach.call(starList,function(e,index){
-            //         e.style.top = Math.random() * 100 + '%';
-            //     })
-            // }, 1000);
         }
-       
-        function rain() {
+
+        function rain(time) {
             var sky = document.querySelector('.sky');
+            if (time === 'day') {
+                sky.style.background = 'linear-gradient(#8e97a2, #5A7495)'
+            } else if (time === 'night') {
+                sky.style.background = '#22313f'
+            }
             sky.style.display = 'block';
             var drops = 50;
             for (var i = 0; i < drops; i++) {
-                 let div = document.createElement('div');
+                let div = document.createElement('div');
                 //var size = Math.random() * 2.7;
                 var size = 1 + parseInt(Math.random() * 2);
                 div.classList.add('drop');
