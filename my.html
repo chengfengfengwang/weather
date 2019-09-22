@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            /* background-color: #5A7495; */
+        }
+
+        .cloud {
+            background-color: #f9f9f9;
+            border-radius: 100px;
+            height: 42px;
+            opacity: 0.75;
+            position: absolute;
+            width: 125px;
+            left: 20%;
+            top: 50px;
+        }
+
+        .cloud:before {
+            background-color: #f9f9f9;
+            border-radius: 100px;
+            content: '';
+            display: block;
+            height: 43px;
+            position: absolute;
+            left: 19px;
+            top: -21px;
+            width: 43px;
+        }
+
+        .cloud:after {
+            background-color: #f9f9f9;
+            border-radius: 100px;
+            content: '';
+            display: block;
+            height: 55px;
+            position: absolute;
+            right: 15px;
+            top: -34px;
+            width: 55px;
+        }
+
+        .night {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#00002F));
+            transition: all 1s;
+        }
+        @keyframes starMS {
+            0% {
+                opacity: 1;
+            }
+            50%{
+                opacity: .3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .night .star {
+            position: absolute;
+             transition: all 100s linear; 
+             /* animation:  1s linear 0 infinite alternate starMS; */
+            
+        }
+        .night .star:nth-child(3n+1){
+            animation:  starMS 4s linear 0s  infinite alternate both;
+        }
+        .night .star:nth-child(3n+2){
+            animation:  starMS 4s linear 1s  infinite alternate both;
+        }
+        .night .star:nth-child(3n){
+            animation:  starMS 4s linear 2s  infinite alternate both;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="cloud"></div>
+    <div class="night">
+
+    </div>
+    <script>
+        var night = document.querySelector('.night');
+        var starts = 52;
+        for (var i = 0; i < starts; i++) {
+            var div = document.createElement('div');
+            //var size = Math.random() * 2.7;
+            var size = 1 + parseInt(Math.random() * 2);
+            div.classList.add('star');
+            div.style.width = size + 'px';
+            div.style.height = size + 'px';
+            div.style.backgroundColor = '#fff';
+            div.style.top = Math.random() * 100 + '%';
+            div.style.left = Math.random() * 100 + '%';
+            night.appendChild(div)
+            
+        }
+        var starList = document.querySelectorAll('.star');
+        // setTimeout(() => {
+        //     var starList = document.querySelectorAll('.star');
+        //     Array.prototype.forEach.call(starList,function(e,index){
+        //         e.style.top = Math.random() * 100 + '%';
+        //     })
+        // }, 1000);
+
+    </script>
+</body>
+
+</html>
