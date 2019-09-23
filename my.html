@@ -188,15 +188,10 @@
     <div id="mapContainer"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-        var rainWords = [
-            '你不要淋到雨啦/不然你会可爱到发芽了',
-        ]
-        var normalWords = [
+
+        var commonWords = [
             '今晚月色真好',
             '出来看星星吗?/不看星星出来也行',
-            '今天天气很好，我希望你开心'
-        ]
-        var commonWords = [
             '你吃东西的样子真可爱，是练过吗？',
             '你是一面湖水，/你是温柔本身',
             '人间本不该令我这么欣喜的，但是你来了',
@@ -215,22 +210,22 @@
             '当你的眼睛眯着笑，/当你喝可乐当你吵',
             '希望全世界的不堪都与你无缘',
             '我想对你好，你从来不知道',
-            '来来来，笑一个',
             '想你，也能成为嗜好',
             '当你说今天的烦恼，当你说夜深你睡不着',
             '愿我们每个人，都成为温暖柔软的人',
-            '如果你爱一个人，一定要告诉他',
             '你在做什么呢？',
-            '我不知道是不是喜欢你，/我总是会想起你',
             '现在凌晨12点零四分，/我在想跟你说些什么呢？',
-            '如果你喜欢我，该多好啊',
-            '我的爱好自私啊',
-            
-        ]
-        var nightWords = [
+            '当你觉得孤独无助时，想一想/还有几十万亿的细胞只为了你一个人而活。',
+            '你这样挺好的，/不用为了谁去改变',
+            '爱能让人强大',
+            '今天天气应该不错吧？',
+            '今晚有星星吗？',
+            '你是最重要的',
             '等不到天黑，烟火不会太完美',
             '情人一起看过多少次月亮,/它在天空看过多少次遗忘'
+
         ]
+      
         function bdMapInitial() {
             var mp = new BMap.Map('mapContainer');
             mp.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
@@ -247,9 +242,9 @@
         function start(result) {
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
-            var wordsIndex = Math.floor(Math.random() * commonWords.length) ;
-            document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0]?commonWords[wordsIndex].split('/')[0]:''
-            document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1]?commonWords[wordsIndex].split('/')[1]:''
+            var wordsIndex = Math.floor(Math.random() * commonWords.length);
+            document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
+            document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
             //getWeather()
             //状态表示
             // 白天：day 晚上：night 
