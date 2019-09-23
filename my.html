@@ -135,7 +135,9 @@
             top: 0;
             width: 100%;
             height: 100%;
-            color: #fff
+            color: #fff;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .city {
@@ -155,14 +157,38 @@
             margin-top: 10px;
             margin-left: 10px
         }
-        .love_words{
-            margin-top: 100px;
+
+        .love_words {
+            margin-top: 70px;
             text-align: center;
-            font-size: 18px;
+            font-size: 19px;
         }
-        .love_words .w2{
+
+        .love_words .w2 {
             margin-top: 10px;
         }
+
+        .weeks_wrapper {
+            margin-top: 90px;
+        }
+
+        .weeks {
+            display: flex;
+            padding: 0 10px;
+            margin-bottom: 6px;
+        }
+
+        .weeks .week_weather {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .weeks .week_temp {
+            display: flex;
+            width: 60px;
+            justify-content: space-between;
+        }
+
         #mapContainer {
             height: 0px;
         }
@@ -183,6 +209,33 @@
             <div class="w1"> </div>
             <div class="w2"></div>
         </div>
+        <div class="weeks_wrapper">
+            <div class="weeks">
+                <div class="day">星期一</div>
+                <div class="week_weather">晴</div>
+                <div class="week_temp">
+                    <div>17</div>
+                    <div>30</div>
+                </div>
+            </div>
+            <div class="weeks">
+                <div class="day">星期一</div>
+                <div class="week_weather">晴</div>
+                <div class="week_temp">
+                    <div>17</div>
+                    <div>30</div>
+                </div>
+            </div>
+            <div class="weeks">
+                <div class="day">星期一</div>
+                <div class="week_weather">晴</div>
+                <div class="week_temp">
+                    <div>17</div>
+                    <div>30</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div id="mapContainer"></div>
@@ -193,39 +246,39 @@
             '今晚月色真好',
             '出来看星星吗?/不看星星出来也行',
             '你吃东西的样子真可爱，是练过吗？',
-            '你是一面湖水，/你是温柔本身',
+            '你是一面湖水/你是温柔本身',
             '人间本不该令我这么欣喜的，但是你来了',
-            '世间万物皆苦，/你明目张胆的偏爱就是救赎',
-            '年少时代的忧郁，/是对整个宇宙的骄傲',
+            '世间万物皆苦/你明目张胆的偏爱就是救赎',
+            '年少时代的忧郁/是对整个宇宙的骄傲',
             '你想吃什么，我去给你买',
             '往事不会说谎，别跟它为难',
             '永远不放弃对美好事物的追求',
-            '不懂爱恨情愁煎熬的我们，/都以为相爱就像风云的善变',
-            '不懂怎么表现温柔的我们，/还以为殉情只是古老的传言',
-            '我才终于明白，/办不到的承诺就成了枷锁',
-            '这故事开始一个人，/我认真写成了我们',
+            '不懂爱恨情愁煎熬的我们/都以为相爱就像风云的善变',
+            '不懂怎么表现温柔的我们/还以为殉情只是古老的传言',
+            '我才终于明白/办不到的承诺就成了枷锁',
+            '这故事开始一个人/我认真写成了我们',
             '这个世界虽然不完美/但我们仍然可以治愈自己',
             '祝愿你做的每一个美梦都能实现',
-            '再见到你，/我一定让自己让自己坚定',
-            '当你的眼睛眯着笑，/当你喝可乐当你吵',
+            '再见到你/我一定让自己让自己坚定',
+            '当你的眼睛眯着笑/当你喝可乐当你吵',
             '希望全世界的不堪都与你无缘',
             '我想对你好，你从来不知道',
             '想你，也能成为嗜好',
             '当你说今天的烦恼，当你说夜深你睡不着',
             '愿我们每个人，都成为温暖柔软的人',
             '你在做什么呢？',
-            '现在凌晨12点零四分，/我在想跟你说些什么呢？',
+            '现在凌晨12点零四分/我在想跟你说些什么呢？',
             '当你觉得孤独无助时，想一想/还有几十万亿的细胞只为了你一个人而活。',
-            '你这样挺好的，/不用为了谁去改变',
+            '你这样挺好的/不用为了谁去改变',
             '爱能让人强大',
             '今天天气应该不错吧？',
             '今晚有星星吗？',
             '你是最重要的',
             '等不到天黑，烟火不会太完美',
             '情人一起看过多少次月亮,/它在天空看过多少次遗忘'
-
         ]
-      
+        var d = new Date();
+        var date = d.getDate();
         function bdMapInitial() {
             var mp = new BMap.Map('mapContainer');
             mp.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
@@ -242,7 +295,7 @@
         function start(result) {
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
-            var wordsIndex = Math.floor(Math.random() * commonWords.length);
+            var wordsIndex = date - 1;
             document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
             document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
             //getWeather()
