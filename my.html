@@ -23,8 +23,9 @@
         .sky {}
 
         /* 晴天 */
-        .cloud_test {
-            display: none
+        .sun_wrapper {
+            display: none;
+            opacity: .5;
         }
 
         @keyframes starMS {
@@ -66,7 +67,7 @@
             left: 0%;
             width: 100%;
             transform-origin: 100% 0%;
-            animation: sunRotate 70s linear infinite alternate;
+            animation: sunRotate 25s linear infinite alternate;
         }
 
         @keyframes sunRotate {
@@ -77,7 +78,7 @@
 
 
             100% {
-                transform: rotate(-19deg)
+                transform: rotate(-6deg)
             }
         }
 
@@ -197,7 +198,7 @@
 
 <body>
     <div class="sky page">
-        <div class="cloud_test">
+        <div class="sun_wrapper">
             <img class="sunshine" src="./img/lc.png" alt="">
         </div>
     </div>
@@ -319,12 +320,13 @@
             //normal('day')
 
             weatherStatus = '晴天';
+            normal('day')
             console.log(dayStatus)
-            if(weatherStatus=='晴天'&&dayStatus=='白天'){
-                normal('day')
-            }else if(weatherStatus=='晴天'&&dayStatus=='晚上'){
-                normal('night')
-            }
+            // if(weatherStatus=='晴天'&&dayStatus=='白天'){
+            //     normal('day')
+            // }else if(weatherStatus=='晴天'&&dayStatus=='晚上'){
+            //     normal('night')
+            // }
         }
         function getWeather() {
             var city = encodeURIComponent(cityName.replace('市', ''));
@@ -358,6 +360,7 @@
                 }
             } else if (time === 'day') {
                 sky.style.backgroundColor = 'rgb(72,145,190)';
+                document.querySelector('.sun_wrapper').style.display='block';
             }
 
 
