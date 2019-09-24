@@ -240,24 +240,24 @@
                 <div class="day">星期一</div>
                 <div class="week_weather">晴</div>
                 <div class="week_temp">
-                    <div>17</div>
-                    <div>30</div>
+                    <div class="min">17</div>
+                    <div class="max">30</div>
                 </div>
             </div>
             <div class="weeks">
                 <div class="day">星期一</div>
                 <div class="week_weather">晴</div>
                 <div class="week_temp">
-                    <div>17</div>
-                    <div>30</div>
+                    <div class="min">17</div>
+                    <div class="max">30</div>
                 </div>
             </div>
             <div class="weeks">
                 <div class="day">星期一</div>
                 <div class="week_weather">晴</div>
                 <div class="week_temp">
-                    <div>17</div>
-                    <div>30</div>
+                    <div class="min">17</div>
+                    <div class="max">30</div>
                 </div>
             </div>
         </div>
@@ -267,7 +267,7 @@
     <div id="mapContainer"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-
+        var weeksHan = ['日','一','二','三','四','五','六'];
         var commonWords = [
             '今晚月色真好',
             '出来看星星吗?/不看星星出来也行',
@@ -304,7 +304,10 @@
             '情人一起看过多少次月亮,/它在天空看过多少次遗忘'
         ]
         var d = new Date();
-        var date = d.getDate(),hours = d.getHours(),dayStatus,weatherStatus
+        var date = d.getDate(),hours = d.getHours(),dayStatus,weatherStatus,futureWeeks=[];
+        for (var i=0;i<3;i++){
+            futureWeeks.push(weeksHan[d.getDay()+i])
+        }
         if(hours>18){
             dayStatus='晚上';
         }else{
@@ -329,7 +332,7 @@
             var wordsIndex = date - 1;
             document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
             document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
-            //getWeather()
+            getWeather()
             //状态表示
             // 白天：day 晚上：night 
             // 晴天：normal 多云：cloud 雨天：rain 雪：snow 
@@ -360,7 +363,15 @@
                 var result = res.result;
                 if (res.error_code === 0) {
                     document.querySelector('.weather_status').innerHTML = result.realtime.info;
-                    document.querySelector('.temp span').innerHTML = result.realtime.temperature;
+                    document.querySelector('.tempe span').innerHTML = result.realtime.temperature;
+                    var futureWeather = result.future;
+                    var weeks = document.querySelectorAll('.weeks');
+                    Array.prototype.forEach.call(weeks,function(e,idx){
+                        e.querySelector('.day').innerHTML = '星期'+futureWeeks[idx];
+                        e.querySelector('.week_weather').innerHTML = futureWeather[idx].weather;
+                        e.querySelector('.week_temp .min').innerHTML = futureWeather[idx].temperature.split('/')[0];
+                        e.querySelector('.week_temp .max').innerHTML = futureWeather[idx].temperature.split('/')[1].replace('℃','')
+                    })
                 } else {
                     alert('出错了，快去联系‘他’！')
                 }
