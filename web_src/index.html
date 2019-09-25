@@ -9,22 +9,36 @@
     <title>嫣然的天气</title>
     <script>
         var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?9299dfb250850d7e09ec3ecf76203229";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?9299dfb250850d7e09ec3ecf76203229";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
         })();
-        </script>
-        
+    </script>
+    <!-- <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe&display=swap&subset=chinese-simplified" rel="stylesheet"> -->
+
     <style>
+        @font-face {
+            font-family: 'medium';
+            src: url('./font/SourceHanSerifCN-Medium.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'regular';
+            src: url('./font/SourceHanSerifCN-Regular.ttf') format('truetype');
+        }
         * {
             margin: 0;
             padding: 0
         }
 
-
-
+        body{
+            font-family: 'medium','regular';
+            /* font-family:'noto', 'ZCOOL KuaiLe', cursive; */
+        }
+        .tempe{
+            font-family: 'monospace';
+        }
         .page {
             position: relative;
             width: 100vw;
@@ -374,7 +388,7 @@
                 //fine('night')
                 //白天晴
                 //fine('day')
-                
+
                 weatherStatus = res;
                 // dayStatus = '晚上'
                 // weatherStatus = '阴转小雨'
@@ -388,13 +402,13 @@
                     cloudy('day')
                 } else if (weatherStatus.indexOf('多云') > -1 && dayStatus == '晚上') {
                     cloudy('night')
-                }else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '白天') {
+                } else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '白天') {
                     rain('day')
-                }else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '晚上') {
+                } else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '晚上') {
                     rain('night')
-                }else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '白天') {
+                } else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '白天') {
                     overcast('day')
-                }else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '晚上') {
+                } else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '晚上') {
                     //console.log('调用：'+ 'overcast night')
                     overcast('night')
                 }
@@ -465,7 +479,7 @@
             } else if (time === 'day') {
                 sky.style.backgroundColor = 'rgb(72,145,190)';
                 document.querySelector('.sun_wrapper').style.display = 'block';
-            }else{
+            } else {
                 showCloudS()
             }
         }
@@ -473,7 +487,7 @@
             showAllClouds();
             fine(time)
         }
-        function overcast(time){
+        function overcast(time) {
             var sky = document.querySelector('.sky');
             if (time === 'day') {
                 sky.style.background = 'linear-gradient(#8e97a2, #5A7495)'
