@@ -350,7 +350,7 @@
         for (var i = 0; i < 3; i++) {
             futureWeeks.push(weeksHan[d.getDay() + i])
         }
-        if (hours > 18) {
+        if (hours > 18 || h<5) {
             dayStatus = '晚上';
         } else {
             dayStatus = '白天';
