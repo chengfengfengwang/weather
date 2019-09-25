@@ -30,18 +30,18 @@ function formatNumber(n) {
     n = n.toString();
     return n[1] ? n : '0' + n;
 }
-var weatherInfo,lastReqTime;
+var weatherInfo,lastReqTime,lastReqCity;
 app.get('/weather', (req, res) => {
     var city = encodeURIComponent(req.query.city);
     var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
-    //console.log('请求到来');
-    if(weatherInfo && reqJuhe){
+    if(weatherInfo && reqJuhe && city===lastReqCity){
         res.json(weatherInfo)
         return
     }
     //console.log('请求聚合');
     axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
         lastReqTime = new Date().valueOf();
+        lastReqCity = city;
         response.data.reqTime = formatTime(lastReqTime);
         weatherInfo = response.data;
         res.json(response.data)
