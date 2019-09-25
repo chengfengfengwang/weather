@@ -348,8 +348,8 @@
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
-            //document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
-            //document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
+            document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
+            document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
             getWeather().then(res => {
                 //状态表示
                 // 白天：day 晚上：night 
@@ -438,7 +438,7 @@
             var sky = document.querySelector('.sky');
             if (time === 'night') {
                 sky.style.background = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#00002F))';
-                sky.style.background = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(24, 50, 89)), to(rgb(52, 130, 186)))';
+                //sky.style.background = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(24, 50, 89)), to(rgb(52, 130, 186)))';
                 var starts = 52;
                 for (var i = 0; i < starts; i++) {
                     var div = document.createElement('div');
