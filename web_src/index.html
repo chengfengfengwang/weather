@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"">
-    <meta http-equiv=" X-UA-Compatible" content="ie=edge">
-    <title>嫣然的天气</title>
+    <meta http-equiv="
+        X-UA-Compatible" content="ie=edge">
+    <!-- <title>嫣然的天气</title> -->
     <style>
         * {
             margin: 0;
@@ -23,7 +24,7 @@
 
         .sky {}
 
-        /* 晴天 */
+        /* 晴 */
         .sun_wrapper {
             display: none;
             opacity: .5;
@@ -84,16 +85,21 @@
         }
         /* 多云 */
         .cloud_wrapper {
-            /* display: none; */
+            display: none;
             opacity: .5;
             position: absolute;
             width: 100%;
             left: 0;
             top:0;
-            animation: cloudMove 120s -45s linear infinite;
         }
         .cloud_wrapper img{
             width: 100%;
+        }
+        .cloud_wrapper.small{
+            animation: cloudMove 120s -45s linear infinite;
+        }
+        .cloud_wrapper.big{
+            animation: cloudMove 380s -120s linear infinite;
         }
         @keyframes cloudMove {
             0% {
@@ -111,7 +117,7 @@
             background-color: #f9efef;
             /* background-color: #e9e9e9; */
             opacity: .4;
-            /* animation: rainDrop 1s linear 0s infinite normal both; */
+            /* animation: rainDrop 1s linear 0s infinite fine both; */
         }
 
         @keyframes rainDrop {
@@ -198,8 +204,19 @@
             display: flex;
             padding: 0 10px;
             margin-bottom: 6px;
+            font-size: 18px;
         }
-
+        .weeks .day{
+            position: relative;
+        }
+        /* .weeks .today:after{
+            position: absolute;
+            right: -38px;
+            bottom: 0;
+            content: '今天';
+            margin-left: 5px;
+            font-size: 14px;
+        } */
         .weeks .week_weather {
             flex-grow: 1;
             text-align: center;
@@ -222,9 +239,11 @@
         <div class="sun_wrapper">
             <img class="sunshine" src="./img/lc.png" alt="">
         </div>
-        <div class="cloud_wrapper">
+        <div class="cloud_wrapper small">
             <img src="./img/cloud.png" alt="" class="cloud">
-            <!-- <img src="./img/cloudys_0.png" alt="" class="cloud"> -->
+        </div>
+        <div class="cloud_wrapper big">
+            <img src="./img/cloudys_0.png" alt="" class="cloud">
         </div>
     </div>
     <div class="page_info">
@@ -237,7 +256,7 @@
         </div>
         <div class="weeks_wrapper">
             <div class="weeks">
-                <div class="day">星期一</div>
+                <div class="day today">星期一</div>
                 <div class="week_weather">晴</div>
                 <div class="week_temp">
                     <div class="min">17</div>
@@ -267,7 +286,7 @@
     <div id="mapContainer"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-        var weeksHan = ['日','一','二','三','四','五','六'];
+        var weeksHan = ['日', '一', '二', '三', '四', '五', '六'];
         var commonWords = [
             '今晚月色真好',
             '出来看星星吗?/不看星星出来也行',
@@ -303,14 +322,14 @@
             '情人一起看过多少次月亮,/它在天空看过多少次遗忘'
         ]
         var d = new Date();
-        var date = d.getDate(),hours = d.getHours(),dayStatus,weatherStatus,futureWeeks=[];
-        for (var i=0;i<3;i++){
-            futureWeeks.push(weeksHan[d.getDay()+i])
+        var date = d.getDate(), hours = d.getHours(), dayStatus, weatherStatus, futureWeeks = [];
+        for (var i = 0; i < 3; i++) {
+            futureWeeks.push(weeksHan[d.getDay() + i])
         }
-        if(hours>18){
-            dayStatus='晚上';
-        }else{
-            dayStatus='白天';
+        if (hours > 18) {
+            dayStatus = '晚上';
+        } else {
+            dayStatus = '白天';
         }
         function bdMapInitial() {
             var mp = new BMap.Map('mapContainer');
@@ -329,59 +348,97 @@
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
-            document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
-            document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
-            getWeather()
-            //状态表示
-            // 白天：day 晚上：night 
-            // 晴天：normal 多云：cloud 雨天：rain 雪：snow 
+            //document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
+            //document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
+            getWeather().then(res => {
+                //状态表示
+                // 白天：day 晚上：night 
+                // 晴：fine 多云：cloud 雨天：rain 雪：snow 
 
-            // 白天下雨
-            //rain('day')
-            //晚上下雨
-            //rain('night')
+                // 白天下雨
+                //rain('day')
+                //晚上下雨
+                //rain('night')
 
-            //晚上晴天
-            //normal('night')
-            //白天晴天
-            //normal('day')
-
-            weatherStatus = '晴天';
-            normal('day')
-            console.log(dayStatus)
-            // if(weatherStatus=='晴天'&&dayStatus=='白天'){
-            //     normal('day')
-            // }else if(weatherStatus=='晴天'&&dayStatus=='晚上'){
-            //     normal('night')
-            // }
-        }
-        function getWeather() {
-            var city = encodeURIComponent(cityName.replace('市', ''));
-            axios.get(`http://139.155.158.160:3000/weather?city=${city}`).then(function (res) {
-                var res = res.data;
-                var result = res.result;
-                if (res.error_code === 0) {
-                    document.querySelector('.weather_status').innerHTML = result.realtime.info;
-                    document.querySelector('.tempe span').innerHTML = result.realtime.temperature;
-                    var futureWeather = result.future;
-                    var weeks = document.querySelectorAll('.weeks');
-                    Array.prototype.forEach.call(weeks,function(e,idx){
-                        e.querySelector('.day').innerHTML = '星期'+futureWeeks[idx];
-                        e.querySelector('.week_weather').innerHTML = futureWeather[idx].weather;
-                        e.querySelector('.week_temp .min').innerHTML = futureWeather[idx].temperature.split('/')[0];
-                        e.querySelector('.week_temp .max').innerHTML = futureWeather[idx].temperature.split('/')[1].replace('℃','')
-                    })
-                } else {
-                    alert('出错了，快去联系‘他’！')
+                //晚上晴
+                //fine('night')
+                //白天晴
+                //fine('day')
+                
+                weatherStatus = res;
+                // dayStatus = '晚上'
+                // weatherStatus = '阴转小雨'
+                console.log(dayStatus, weatherStatus)
+                //rain('day')
+                if (weatherStatus == '晴' && dayStatus == '白天') {
+                    fine('day')
+                } else if (weatherStatus == '晴' && dayStatus == '晚上') {
+                    fine('night')
+                } else if (weatherStatus.indexOf('多云') > -1 && dayStatus == '白天') {
+                    cloudy('day')
+                } else if (weatherStatus.indexOf('多云') > -1 && dayStatus == '晚上') {
+                    cloudy('night')
+                }else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '白天') {
+                    rain('day')
+                }else if (weatherStatus.indexOf('雨') > -1 && dayStatus == '晚上') {
+                    rain('night')
+                }else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '白天') {
+                    overcast('day')
+                }else if (weatherStatus.indexOf('阴') > -1 && dayStatus == '晚上') {
+                    //console.log('调用：'+ 'overcast night')
+                    overcast('night')
                 }
-            }).catch((err)=>{
-                alert('出错了，快去联系‘他’！')
+            })
+
+        }
+        function showAllClouds() {
+            var clouds = document.querySelectorAll('.cloud_wrapper');
+            Array.prototype.forEach.call(clouds, function (e, idx) {
+                e.style.display = 'block';
             })
         }
-        function normal(time) {
+        function showCloudS() {
+            var cloud = document.querySelector('.cloud_wrapper.small');
+            cloud.style.display = 'block';
+
+        }
+        function showCloudB() {
+            var cloud = document.querySelector('.cloud_wrapper.big');
+            cloud.style.display = 'block';
+
+        }
+        function getWeather() {
+            return new Promise((resolve, reject) => {
+                var city = encodeURIComponent(cityName.replace('市', ''));
+                axios.get(`http://139.155.158.160:3000/weather?city=${city}`).then(function (res) {
+                    var res = res.data;
+                    var result = res.result;
+                    if (res.error_code === 0) {
+                        document.querySelector('.weather_status').innerHTML = result.realtime.info;
+                        document.querySelector('.tempe span').innerHTML = result.realtime.temperature;
+                        var futureWeather = result.future;
+                        var weeks = document.querySelectorAll('.weeks');
+                        Array.prototype.forEach.call(weeks, function (e, idx) {
+                            e.querySelector('.day').innerHTML = '星期' + futureWeeks[idx];
+                            e.querySelector('.week_weather').innerHTML = futureWeather[idx].weather;
+                            e.querySelector('.week_temp .min').innerHTML = futureWeather[idx].temperature.split('/')[0];
+                            e.querySelector('.week_temp .max').innerHTML = futureWeather[idx].temperature.split('/')[1].replace('℃', '')
+                        })
+                        resolve(result.realtime.info)
+                    } else {
+                        alert('出错了，快去联系‘他’！')
+                    }
+                }).catch((err) => {
+                    alert('出错了，快去联系‘他’！')
+                })
+            })
+
+        }
+        function fine(time) {
             var sky = document.querySelector('.sky');
             if (time === 'night') {
                 sky.style.background = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#00002F))';
+                sky.style.background = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(24, 50, 89)), to(rgb(52, 130, 186)))';
                 var starts = 52;
                 for (var i = 0; i < starts; i++) {
                     var div = document.createElement('div');
@@ -397,12 +454,23 @@
                 }
             } else if (time === 'day') {
                 sky.style.backgroundColor = 'rgb(72,145,190)';
-                document.querySelector('.sun_wrapper').style.display='block';
+                document.querySelector('.sun_wrapper').style.display = 'block';
+            }else{
+                showCloudS()
             }
-
-
         }
-
+        function cloudy(time) {
+            showAllClouds();
+            fine(time)
+        }
+        function overcast(time){
+            var sky = document.querySelector('.sky');
+            if (time === 'day') {
+                sky.style.background = 'linear-gradient(#8e97a2, #5A7495)'
+            } else if (time === 'night') {
+                sky.style.background = '#22313f'
+            }
+        }
         function rain(time) {
             var sky = document.querySelector('.sky');
             if (time === 'day') {
