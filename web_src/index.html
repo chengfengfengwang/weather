@@ -51,7 +51,7 @@
         /* 晴 */
         .sun_wrapper {
             display: none;
-            opacity: .5;
+            opacity: .8;
         }
 
         @keyframes starMS {
@@ -89,22 +89,30 @@
 
         .sky .sunshine {
             position: absolute;
-            top: -2%;
-            left: 0%;
+            top: -6%;
+            left: -4%;
             width: 100%;
-            transform-origin: 100% 0%;
-            animation: sunRotate 25s linear infinite alternate;
+            transform-origin: 25% 20%;
+             animation: sunRotate 25s linear infinite alternate; 
         }
 
         @keyframes sunRotate {
             0% {
-                transform: rotate(0deg)
+                transform: rotate(20deg);
+                opacity: .5;
             }
-
-
-
+            10%{
+                opacity: .3;
+            }
+            40%{
+                opacity: 1;
+            }
+            70%{
+                opacity: .5;
+            }
             100% {
-                transform: rotate(-6deg)
+                transform: rotate(-5deg);
+                opacity: .9;
             }
         }
         /* 多云 */
@@ -123,7 +131,9 @@
             animation: cloudMove 120s -45s linear infinite;
         }
         .cloud_wrapper.big{
-            animation: cloudMove 380s -120s linear infinite;
+            opacity: .7;
+            top:-10%;
+             animation: cloudMove 380s -180s linear infinite; 
         }
         @keyframes cloudMove {
             0% {
@@ -211,6 +221,7 @@
         }
 
         .love_words {
+            /* display: none; */
             margin-top: 50px;
             text-align: center;
             font-size: 19px;
@@ -261,13 +272,13 @@
 <body>
     <div class="sky page">
         <div class="sun_wrapper">
-            <img class="sunshine" src="./img/lc.png" alt="">
+            <img class="sunshine" src="./img/l5.png" alt="">
         </div>
         <div class="cloud_wrapper small">
             <img src="./img/cloud.png" alt="" class="cloud">
         </div>
         <div class="cloud_wrapper big">
-            <img src="./img/cloudys_0.png" alt="" class="cloud">
+            <img src="./img/cloud2.png" alt="" class="cloud">
         </div>
     </div>
     <div class="page_info">
@@ -391,7 +402,7 @@
 
                 weatherStatus = res;
                 // dayStatus = '晚上'
-                // weatherStatus = '阴转小雨'
+                 weatherStatus = '多云'
                 console.log(dayStatus, weatherStatus)
                 //rain('day')
                 if (weatherStatus == '晴' && dayStatus == '白天') {
