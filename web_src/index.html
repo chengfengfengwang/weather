@@ -348,7 +348,6 @@
         var d = new Date();
         var date = d.getDate(), hours = d.getHours(), dayStatus, weatherStatus, futureWeeks = [];
         for (var i = 0; i < 3; i++) {
-            console.log(i)
             futureWeeks.push(weeksHan[(d.getDay() + i)%7])
         }
         if (hours > 18 || hours<5) {
@@ -423,9 +422,9 @@
             })
         }
         function showCloudS() {
+            console.log('zzz')
             var cloud = document.querySelector('.cloud_wrapper.small');
             cloud.style.display = 'block';
-
         }
         function showCloudB() {
             var cloud = document.querySelector('.cloud_wrapper.big');
@@ -480,6 +479,7 @@
             } else if (time === 'day') {
                 sky.style.backgroundColor = 'rgb(72,145,190)';
                 document.querySelector('.sun_wrapper').style.display = 'block';
+                showCloudS()
             } else {
                 showCloudS()
             }
