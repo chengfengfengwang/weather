@@ -37,12 +37,12 @@ var regularText = `
             等不到天黑，烟火不会太完美
             情人一起看过多少次月亮,/它在天空看过多少次遗忘`
 var fontmin = new Fontmin()
-    .src('./originFont/SourceHanSerifCN-Regular.ttf')
+    .src('./../originFont/SourceHanSerifCN-Regular.ttf')
     .use(Fontmin.glyph({
         text: regularText,
         hinting: false         // keep ttf hint info (fpgm, prep, cvt). default = true
     }))
-    .dest('./font');
+    .dest('../font');
 fontmin.run(function (err, files) {
     if (err) {
         throw err;
