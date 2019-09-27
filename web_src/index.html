@@ -46,7 +46,7 @@
         }
         .page {
             position: relative;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
             overflow: hidden;
         }
@@ -205,6 +205,9 @@
             color: #fff;
             padding: 0 20px;
             box-sizing: border-box;
+            max-width: 500px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .city {
@@ -227,9 +230,9 @@
 
         .love_words {
             /* display: none; */
-            margin-top: 50px;
+            margin-top: 70px;
             text-align: center;
-            font-size: 19px;
+            font-size: 21px;
         }
 
         .love_words .w2 {
@@ -271,20 +274,28 @@
         #mapContainer {
             height: 0px;
         }
+        .main_wrapper{
+            position: relative;
+            max-width: 500px;
+            margin: auto;
+        }
     </style>
 </head>
 
 <body>
     <div class="sky page">
-        <div class="sun_wrapper">
-            <img class="sunshine" src="./img/l5.png" alt="">
+        <div class="main_wrapper">
+                <div class="sun_wrapper">
+                        <img class="sunshine" src="./img/l5.png" alt="">
+                    </div>
+                    <div class="cloud_wrapper small">
+                        <img src="./img/cloud.png" alt="" class="cloud">
+                    </div>
+                    <div class="cloud_wrapper big">
+                        <img src="./img/cloud2.png" alt="" class="cloud">
+                    </div>
         </div>
-        <div class="cloud_wrapper small">
-            <img src="./img/cloud.png" alt="" class="cloud">
-        </div>
-        <div class="cloud_wrapper big">
-            <img src="./img/cloud2.png" alt="" class="cloud">
-        </div>
+        
     </div>
     <div class="page_info">
         <div class="city">洛阳市</div>
