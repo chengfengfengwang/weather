@@ -610,6 +610,7 @@
             }
              //存储播放序号到本地
             localStorage.setItem('lastPlayIndex',playIndex);
+            console.log('上次播放时间',lastPlayTime)
             console.log('playindex',playIndex)
             var audio = new Audio();
             audio.src = audioBaseUrl + audioArr[playIndex];
