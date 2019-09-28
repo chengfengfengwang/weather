@@ -598,8 +598,8 @@
             //获取上次播放序号
             var lastPlayIndex = localStorage.getItem('lastPlayIndex');
             lastPlayIndex = lastPlayIndex?lastPlayIndex:Math.floor(Math.random()*audioArr.length);
-            
-            if((m-lastPlayTime)>0){
+            console.log(m,lastPlayTime)
+            if(Math.abs((m-lastPlayTime))>0){
                 //1分钟之后访问随机音乐
                 var playIndex = Math.floor(Math.random()*audioArr.length);
                 //存储时间到本地
