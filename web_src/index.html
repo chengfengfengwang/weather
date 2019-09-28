@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,8 @@
     <meta http-equiv="
         X-UA-Compatible" content="ie=edge">
     <title>嫣然的天气</title>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -279,23 +281,50 @@
             max-width: 500px;
             margin: auto;
         }
+        .play_icon{
+            position: fixed;
+            top:15px;
+            right: 15px;
+            z-index: 99;
+            width: 25px;
+            height: 25px;
+            transform-origin: 50% 50%;
+        }
+        .play_icon.playing{
+            animation: musicPlaying 12s linear infinite;
+        }
+        .play_icon img{
+            width: 100%;
+            height: 100%;
+        }
+        @keyframes musicPlaying{
+            0%{
+                transform: rotate(0deg)
+            }
+            100%{
+                transform: rotate(360deg)
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="play_icon">
+        <img src="./img/on.png" alt="">
+    </div>
     <div class="sky page">
         <div class="main_wrapper">
-                <div class="sun_wrapper">
-                        <img class="sunshine" src="./img/l5.png" alt="">
-                    </div>
-                    <div class="cloud_wrapper small">
-                        <img src="./img/cloud.png" alt="" class="cloud">
-                    </div>
-                    <div class="cloud_wrapper big">
-                        <img src="./img/cloud2.png" alt="" class="cloud">
-                    </div>
+            <div class="sun_wrapper">
+                <img class="sunshine" src="./img/l5.png" alt="">
+            </div>
+            <div class="cloud_wrapper small">
+                <img src="./img/cloud.png" alt="" class="cloud">
+            </div>
+            <div class="cloud_wrapper big">
+                <img src="./img/cloud2.png" alt="" class="cloud">
+            </div>
         </div>
-        
+
     </div>
     <div class="page_info">
         <div class="city">洛阳市</div>
@@ -336,8 +365,22 @@
 
     <div id="mapContainer"></div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <script type="text/javascript">
         var weeksHan = ['日', '一', '二', '三', '四', '五', '六'];
+        var playIcon = document.querySelector('.play_icon');
+        var audioBaseUrl = 'https://s.immusician.com/web/h5/assets/';
+        var audioArr = [
+            '卡农.mp3',
+            '修炼爱情.mp3',
+            '奇迹的山.mp3',
+            '少年的梦.mp3',
+            'AlwaysWithMe.mp3',
+            '爱的天国.mp3',
+            '雪之梦.mp3',
+            '风之诗.mp3',
+            '绿袖子.mp3'
+        ]
         var commonWords = [
             '今晚月色真好',
             '出来看星星吗?/不看星星出来也行',
@@ -373,11 +416,11 @@
             '情人一起看过多少次月亮,/它在天空看过多少次遗忘'
         ]
         var d = new Date();
-        var date = d.getDate(), hours = d.getHours(), dayStatus, weatherStatus, futureWeeks = [];
+        var date = d.getDate(), hours = d.getHours(), m = d.getMinutes(), dayStatus, weatherStatus, futureWeeks = [];
         for (var i = 0; i < 3; i++) {
-            futureWeeks.push(weeksHan[(d.getDay() + i)%7])
+            futureWeeks.push(weeksHan[(d.getDay() + i) % 7])
         }
-        if (hours > 18 || hours<5) {
+        if (hours > 18 || hours < 5) {
             dayStatus = '晚上';
         } else {
             dayStatus = '白天';
@@ -396,6 +439,7 @@
         }
         //开始
         function start(result) {
+            initialAudio();
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
@@ -449,7 +493,6 @@
             })
         }
         function showCloudS() {
-            console.log('zzz')
             var cloud = document.querySelector('.cloud_wrapper.small');
             cloud.style.display = 'block';
         }
@@ -547,7 +590,62 @@
                 }, Math.random() * 2000);
             }
         }
-
+        function initialAudio() {
+            //获取上次播放时间
+            var lastPlayTime = Number(localStorage.getItem('lastPlayTime'));
+            lastPlayTime = lastPlayTime?lastPlayTime:0;
+            //获取上次播放序号
+            var lastPlayIndex = localStorage.getItem('lastPlayIndex');
+            lastPlayIndex = lastPlayIndex?lastPlayIndex:Math.floor(Math.random(audioArr.length));
+            //存储时间到本地
+            localStorage.setItem('lastPlayTime',m);
+            if((m-lastPlayTime)>10){
+                //10分钟之后随机音乐
+                var playIndex = Math.floor(Math.random(audioArr.length));
+                console.log('10分以后')
+            }else{
+                //10分钟之内不换音乐
+                var playIndex = lastPlayIndex;
+                console.log('10分以内')
+            }
+             //存储播放序号到本地
+            localStorage.setItem('lastPlayIndex',playIndex);
+            console.log('playindex',playIndex)
+            var audio = new Audio();
+            audio.src = audioBaseUrl + audioArr[playIndex];
+            audio.setAttribute('id','pageAudio');
+            if(testWeixin()){
+                autoPlayAudio(audio);
+            }
+            playIcon.addEventListener('click', function () {
+                if (playIcon.classList.contains('playing')) {
+                    playIcon.classList.remove('playing');
+                    audio.pause()
+                } else {
+                    playIcon.classList.add('playing');
+                    audio.play()
+                }
+            })
+        }
+        function autoPlayAudio(audio) {
+            wx.config({
+                // 配置信息, 即使不正确也能使用 wx.ready
+                debug: false,
+                appId: '',
+                timestamp: 1,
+                nonceStr: '',
+                signature: '',
+                jsApiList: []
+            });
+            wx.ready(function () {
+                playIcon.classList.add('playing');
+                audio.play();
+            });
+        }
+        function testWeixin() { //判断是否是微信
+                var ua = navigator.userAgent.toLowerCase();
+                return ua.match(/MicroMessenger/i) == "micromessenger";
+            };
         window.onload = loadBDScript;
 
     </script>
