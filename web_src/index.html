@@ -598,16 +598,16 @@
             var lastPlayIndex = localStorage.getItem('lastPlayIndex');
             lastPlayIndex = lastPlayIndex?lastPlayIndex:Math.floor(Math.random()*audioArr.length);
             
-            if((m-lastPlayTime)>2){
-                //10分钟之后随机音乐
+            if((m-lastPlayTime)>0){
+                //1分钟之后访问随机音乐
                 var playIndex = Math.floor(Math.random()*audioArr.length);
                 //存储时间到本地
                 localStorage.setItem('lastPlayTime',m);
-                console.log('2分以后')
+                console.log('1分以后')
             }else{
-                //10分钟之内不换音乐
+                //1分钟之内不换音乐
                 var playIndex = lastPlayIndex;
-                console.log('2分以内')
+                console.log('1分以内')
             }
              //存储播放序号到本地
             localStorage.setItem('lastPlayIndex',playIndex);
