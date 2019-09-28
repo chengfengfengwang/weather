@@ -7,8 +7,8 @@
     <meta http-equiv="
         X-UA-Compatible" content="ie=edge">
     <title>嫣然的天气</title>
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> -->
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -41,6 +41,7 @@
 
         body{
             font-family: 'syz', 'medium','regular';
+            font-family: 'syz', 'syz','regular';
             /* font-family:'noto', 'ZCOOL KuaiLe', cursive; */
         }
         .tempe{
@@ -420,7 +421,7 @@
         for (var i = 0; i < 3; i++) {
             futureWeeks.push(weeksHan[(d.getDay() + i) % 7])
         }
-        if (hours > 18 || hours < 5) {
+        if (hours > 19 || hours < 5) {
             dayStatus = '晚上';
         } else {
             dayStatus = '白天';
