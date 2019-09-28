@@ -601,6 +601,9 @@
             console.log(m,lastPlayTime)
             if(Math.abs((m-lastPlayTime))>0){
                 //1分钟之后访问随机音乐
+                console.log('----')
+                console.log(audioArr.length)
+                console.log('----')
                 var playIndex = Math.floor(Math.random()*audioArr.length);
                 //存储时间到本地
                 localStorage.setItem('lastPlayTime',m);
