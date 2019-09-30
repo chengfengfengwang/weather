@@ -1,5 +1,6 @@
 var Fontmin = require('fontmin');
 var mediumText = `
+            生日快乐！希望你永远开心、快乐
             北京市洛阳
             012345678
             晴多云雨小大暴转阴雪

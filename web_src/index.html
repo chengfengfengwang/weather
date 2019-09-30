@@ -404,7 +404,7 @@
             '人间本不该令我这么欣喜的，但是你来了',
             '我想对你好，你从来不知道',
             '想你，也能成为嗜好',
-            '当你说今天的烦恼，当你说夜深你睡不着',
+            '当你说今天的烦恼，/当你说夜深你睡不着',
             '你这样挺好的/不用为了谁去改变',
             '爱能让人强大',
             '今天天气应该不错吧？',
@@ -442,8 +442,15 @@
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
-            document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
-            document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
+            if((d.getMonth()+1)===10 && date === 3){
+                document.querySelector('.love_words .w1').innerHTML = '生日快乐！'
+                document.querySelector('.love_words .w2').innerHTML = '希望你永远开心、快乐'
+            }else{
+                document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
+                document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
+            }
+            document.querySelector('.love_words .w1').innerHTML = '生日快乐！'
+                document.querySelector('.love_words .w2').innerHTML = '希望你永远开心、快乐'
             getWeather().then(res => {
                 //状态表示
                 // 白天：day 晚上：night 
