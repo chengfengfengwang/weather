@@ -488,7 +488,7 @@
                 //fine('night')
                 //白天晴
                 //fine('day')
-                document.querySelector('.city').innerHTML = res.city;
+                
                 weatherStatus = res;
                 // dayStatus = '晚上'
                 //  weatherStatus = '多云'
@@ -537,6 +537,7 @@
                 // var url = `http://localhost/weather?city=${city}`
                 axios.get(url).then(function (res) {
                     var res = res.data;
+                    document.querySelector('.city').innerHTML = res.city;
                     var result = res.result;
                     if (res.error_code === 0) {
                         document.querySelector('.weather_status').innerHTML = result.realtime.info;
