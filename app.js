@@ -37,41 +37,66 @@ function getCityAndWeather(ip) {
     })
 }
 var weatherInfo, lastReqTime, lastReqCity, ipAdress;
+// app.get('/weather', (req, res) => {
+//     console.log('----')
+//     console.log(req.ip)
+//     ipAdress = req.ip.split('::ffff:')[1];
+//     console.log('----')
+//     //var city = encodeURIComponent(req.query.city);
+    
+    
+//     var murl = `http://api.map.baidu.com/location/ip?ip=${ipAdress}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
+//     axios.get(murl).then(mres => {
+//         var cityArr = mres.data.content.address.split('省');
+//         if(cityArr.length>1){
+//             var city = cityArr[1].replace('市', '');
+//         }else{
+//             var city = cityArr[0].replace('市', '');
+//         }
+        
+//         console.log('----')
+//         console.log(city)
+//         console.log('----')
+//         var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
+//         // if (weatherInfo && reqJuhe && city === lastReqCity) {
+//         //     res.json(weatherInfo)
+//         //     return
+//         // }
+//         axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + encodeURIComponent(city) + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
+//             lastReqTime = new Date().valueOf();
+//             lastReqCity = city;
+//             response.data.reqTime = formatTime(lastReqTime);
+//             weatherInfo = response.data;
+//             weatherInfo.ipAdress = ipAdress;
+//             weatherInfo.city = city+'市';
+//             res.json(response.data)
+//         })
+//     })
+
+// })
 app.get('/weather', (req, res) => {
     console.log('----')
     console.log(req.ip)
     ipAdress = req.ip.split('::ffff:')[1];
+    console.log(formatTime(new Date().valueOf()));
     console.log('----')
-    //var city = encodeURIComponent(req.query.city);
+    var city = encodeURIComponent(req.query.city);
     
-    
-    var murl = `http://api.map.baidu.com/location/ip?ip=${ipAdress}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
-    axios.get(murl).then(mres => {
-        var cityArr = mres.data.content.address.split('省');
-        if(cityArr.length>1){
-            var city = cityArr[1].replace('市', '');
-        }else{
-            var city = cityArr[0].replace('市', '');
-        }
-        
-        console.log('----')
-        console.log(city)
-        console.log('----')
         var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
         // if (weatherInfo && reqJuhe && city === lastReqCity) {
         //     res.json(weatherInfo)
         //     return
         // }
-        axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + encodeURIComponent(city) + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
+        axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
             lastReqTime = new Date().valueOf();
-            lastReqCity = city;
+            lastReqCity = req.query.city;
             response.data.reqTime = formatTime(lastReqTime);
             weatherInfo = response.data;
             weatherInfo.ipAdress = ipAdress;
-            weatherInfo.city = city+'市';
+            weatherInfo.city = req.query.city+'市';
             res.json(response.data)
         })
-    })
+    
 
 })
 

@@ -537,7 +537,7 @@
                 // var url = `http://localhost/weather?city=${city}`
                 axios.get(url).then(function (res) {
                     var res = res.data;
-                    document.querySelector('.city').innerHTML = res.city;
+                    document.querySelector('.city').innerHTML = cityName;
                     var result = res.result;
                     if (res.error_code === 0) {
                         document.querySelector('.weather_status').innerHTML = result.realtime.info;
