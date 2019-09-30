@@ -53,7 +53,7 @@ app.get('/weather', (req, res) => {
         //     res.json(weatherInfo)
         //     return
         // }
-        axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
+        axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + encodeURIComponent(city) + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
             lastReqTime = new Date().valueOf();
             lastReqCity = city;
             response.data.reqTime = formatTime(lastReqTime);
