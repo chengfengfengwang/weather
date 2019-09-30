@@ -47,8 +47,13 @@ app.get('/weather', (req, res) => {
     
     var murl = `http://api.map.baidu.com/location/ip?ip=${ipAdress}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
     axios.get(murl).then(mres => {
-        var ocity = mres.data.content.address.split('省')[1];
-        var city = ocity.replace('市', '');
+        var cityArr = mres.data.content.address.split('省');
+        if(cityArr.length>1){
+            var city = cityArr[1].replace('市', '');
+        }else{
+            var city = cityArr[0].replace('市', '');
+        }
+        
         console.log('----')
         console.log(city)
         console.log('----')
