@@ -440,6 +440,7 @@
         //开始
         function start(result) {
             initialAudio();
+            console.log(result)
             window.cityName = result.name;
             document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
@@ -510,7 +511,9 @@
         function getWeather() {
             return new Promise((resolve, reject) => {
                 var city = encodeURIComponent(cityName.replace('市', ''));
-                axios.get(`http://139.155.158.160/weather?city=${city}`).then(function (res) {
+                var url = `http://139.155.158.160/weather?city=${city}`;
+               // var url = `http://localhost/weather?city=${city}`
+                axios.get(url).then(function (res) {
                     var res = res.data;
                     var result = res.result;
                     if (res.error_code === 0) {
