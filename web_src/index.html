@@ -4,21 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"">
-    <meta http-equiv="
-        X-UA-Compatible" content="ie=edge">
+    <meta http-equiv=" X-UA-Compatible" content="ie=edge">
     <title>嫣然的天气</title>
-    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script> -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
     <script>
         var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?3d4f33ff701b2f2c4063c7aab5e3d906";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?3d4f33ff701b2f2c4063c7aab5e3d906";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
         })();
-        </script>
-        
+    </script>
+
     <!-- <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe&display=swap&subset=chinese-simplified" rel="stylesheet"> -->
 
     <style>
@@ -26,28 +25,33 @@
             font-family: 'medium';
             src: url('./font/SourceHanSerifCN-Medium.ttf') format('truetype');
         }
+
         @font-face {
             font-family: 'regular';
             src: url('./font/SourceHanSerifCN-Regular.ttf') format('truetype');
         }
+
         @font-face {
             font-family: 'syz';
-             src: url('./font/siyuan_z.ttf') format('truetype'); 
+            src: url('./font/siyuan_z.ttf') format('truetype');
             /* src: url('./originFont/siyuan_z.ttf') format('truetype'); */
         }
+
         * {
             margin: 0;
             padding: 0
         }
 
-        body{
-            font-family: 'syz', 'medium','regular';
-            font-family: 'syz', 'syz','regular';
+        body {
+            font-family: 'syz', 'medium', 'regular';
+            font-family: 'syz', 'syz', 'regular';
             /* font-family:'noto', 'ZCOOL KuaiLe', cursive; */
         }
-        .tempe{
+
+        .tempe {
             font-family: 'monospace';
         }
+
         .page {
             position: relative;
             width: 100%;
@@ -102,7 +106,7 @@
             left: -16%;
             width: 100%;
             transform-origin: 25% 20%;
-             /* animation: sunRotate 25s linear infinite alternate;  */
+            /* animation: sunRotate 25s linear infinite alternate;  */
         }
 
         @keyframes sunRotate {
@@ -110,20 +114,25 @@
                 transform: rotate(20deg);
                 opacity: .5;
             }
-            10%{
+
+            10% {
                 opacity: .3;
             }
-            40%{
+
+            40% {
                 opacity: 1;
             }
-            70%{
+
+            70% {
                 opacity: .5;
             }
+
             100% {
                 transform: rotate(-5deg);
                 opacity: .9;
             }
         }
+
         /* 多云 */
         .cloud_wrapper {
             display: none;
@@ -131,27 +140,33 @@
             position: absolute;
             width: 100%;
             left: 0;
-            top:0;
+            top: 0;
         }
-        .cloud_wrapper img{
+
+        .cloud_wrapper img {
             width: 100%;
         }
-        .cloud_wrapper.small{
+
+        .cloud_wrapper.small {
             animation: cloudMove 120s -45s linear infinite;
         }
-        .cloud_wrapper.big{
+
+        .cloud_wrapper.big {
             opacity: .7;
-            top:-10%;
-             animation: cloudMove 380s -180s linear infinite; 
+            top: -10%;
+            animation: cloudMove 380s -180s linear infinite;
         }
+
         @keyframes cloudMove {
             0% {
                 left: -100vw;
             }
+
             100% {
                 left: 100vw;
             }
         }
+
         /* 下雨 */
         .drop {
             position: absolute;
@@ -253,9 +268,11 @@
             margin-bottom: 6px;
             font-size: 18px;
         }
-        .weeks .day{
+
+        .weeks .day {
             position: relative;
         }
+
         /* .weeks .today:after{
             position: absolute;
             right: -38px;
@@ -278,32 +295,38 @@
         #mapContainer {
             height: 0px;
         }
-        .main_wrapper{
+
+        .main_wrapper {
             position: relative;
             max-width: 500px;
             margin: auto;
         }
-        .play_icon{
+
+        .play_icon {
             position: fixed;
-            top:15px;
+            top: 15px;
             right: 15px;
             z-index: 99;
             width: 25px;
             height: 25px;
             transform-origin: 50% 50%;
         }
-        .play_icon.playing{
+
+        .play_icon.playing {
             animation: musicPlaying 12s linear infinite;
         }
-        .play_icon img{
+
+        .play_icon img {
             width: 100%;
             height: 100%;
         }
-        @keyframes musicPlaying{
-            0%{
+
+        @keyframes musicPlaying {
+            0% {
                 transform: rotate(0deg)
             }
-            100%{
+
+            100% {
                 transform: rotate(360deg)
             }
         }
@@ -442,16 +465,15 @@
             initialAudio();
             console.log(result)
             window.cityName = result.name;
-            document.querySelector('.city').innerHTML = cityName;
             var wordsIndex = date - 1;
-            if((d.getMonth()+1)===10 && date === 3){
+            if ((d.getMonth() + 1) === 10 && date === 3) {
                 document.querySelector('.love_words .w1').innerHTML = '生日快乐！'
                 document.querySelector('.love_words .w2').innerHTML = '希望你永远开心、快乐'
-            }else{
+            } else {
                 document.querySelector('.love_words .w1').innerHTML = commonWords[wordsIndex].split('/')[0] ? commonWords[wordsIndex].split('/')[0] : ''
                 document.querySelector('.love_words .w2').innerHTML = commonWords[wordsIndex].split('/')[1] ? commonWords[wordsIndex].split('/')[1] : ''
             }
-           
+
             getWeather().then(res => {
                 //状态表示
                 // 白天：day 晚上：night 
@@ -466,7 +488,7 @@
                 //fine('night')
                 //白天晴
                 //fine('day')
-
+                document.querySelector('.city').innerHTML = res.city;
                 weatherStatus = res;
                 // dayStatus = '晚上'
                 //  weatherStatus = '多云'
@@ -512,7 +534,7 @@
             return new Promise((resolve, reject) => {
                 var city = encodeURIComponent(cityName.replace('市', ''));
                 var url = `http://139.155.158.160/weather?city=${city}`;
-               // var url = `http://localhost/weather?city=${city}`
+                // var url = `http://localhost/weather?city=${city}`
                 axios.get(url).then(function (res) {
                     var res = res.data;
                     var result = res.result;
@@ -602,38 +624,38 @@
         function initialAudio() {
             //获取上次播放时间
             var lastPlayTime = Number(localStorage.getItem('lastPlayTime'));
-            lastPlayTime = lastPlayTime?lastPlayTime:0;
+            lastPlayTime = lastPlayTime ? lastPlayTime : 0;
             //获取上次播放序号
             var lastPlayIndex = localStorage.getItem('lastPlayIndex');
-            lastPlayIndex = lastPlayIndex?lastPlayIndex:Math.floor(Math.random()*audioArr.length);
-            console.log(m,lastPlayTime)
-            if(Math.abs((m-lastPlayTime))>0){
+            lastPlayIndex = lastPlayIndex ? lastPlayIndex : Math.floor(Math.random() * audioArr.length);
+            console.log(m, lastPlayTime)
+            if (Math.abs((m - lastPlayTime)) > 0) {
                 //1分钟之后访问随机音乐
                 console.log('----')
                 console.log(audioArr.length)
                 console.log('----')
-                var playIndex = Math.floor(Math.random()*audioArr.length);
+                var playIndex = Math.floor(Math.random() * audioArr.length);
                 //存储时间到本地
-                localStorage.setItem('lastPlayTime',m);
+                localStorage.setItem('lastPlayTime', m);
                 console.log('1分以后')
-            }else{
+            } else {
                 //1分钟之内不换音乐
                 var playIndex = lastPlayIndex;
                 console.log('1分以内')
             }
-             //存储播放序号到本地
-            localStorage.setItem('lastPlayIndex',playIndex);
-            console.log('上次播放时间',lastPlayTime)
-            console.log('playindex',playIndex)
+            //存储播放序号到本地
+            localStorage.setItem('lastPlayIndex', playIndex);
+            console.log('上次播放时间', lastPlayTime)
+            console.log('playindex', playIndex)
             var audio = new Audio();
             audio.src = audioBaseUrl + audioArr[playIndex];
-            audio.setAttribute('id','pageAudio');
-            audio.addEventListener('ended', function () {  
-                audio.src = audioBaseUrl + audioArr[Math.floor(Math.random()*audioArr.length)];
+            audio.setAttribute('id', 'pageAudio');
+            audio.addEventListener('ended', function () {
+                audio.src = audioBaseUrl + audioArr[Math.floor(Math.random() * audioArr.length)];
                 audio.pause();
                 audio.play()
             })
-            if(testWeixin()){
+            if (testWeixin()) {
                 autoPlayAudio(audio);
             }
             playIcon.addEventListener('click', function () {
@@ -662,9 +684,15 @@
             });
         }
         function testWeixin() { //判断是否是微信
-                var ua = navigator.userAgent.toLowerCase();
-                return ua.match(/MicroMessenger/i) == "micromessenger";
-            };
+            var ua = navigator.userAgent.toLowerCase();
+            return ua.match(/MicroMessenger/i) == "micromessenger";
+        };
+        function getCity(ip) {
+            var url = `http://api.map.baidu.com/location/ip?ip=${ip}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
+            axios.get(url).then(response => {
+                console.log(response)
+            })
+        }
         window.onload = loadBDScript;
 
     </script>

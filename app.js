@@ -13,7 +13,7 @@ app.all('*', function (req, res, next) {
     next();
 });
 function formatTime(date) {
-    var date = date; 
+    var date = date;
     var date = new Date(date);
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -30,27 +30,40 @@ function formatNumber(n) {
     n = n.toString();
     return n[1] ? n : '0' + n;
 }
-var weatherInfo,lastReqTime,lastReqCity,ipAdress;
+function getCityAndWeather(ip) {
+    var murl = `http://api.map.baidu.com/location/ip?ip=${ip}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
+    axios.get(murl).then(mres => {
+        var city = mres.data.content.address.replace('市', '');
+    })
+}
+var weatherInfo, lastReqTime, lastReqCity, ipAdress;
 app.get('/weather', (req, res) => {
     console.log('----')
     console.log(req.ip)
-    ipAdress = req.ip;
+    ipAdress = req.ip.split('::ffff:')[1];
     console.log('----')
-    var city = encodeURIComponent(req.query.city);
-    var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
-    if(weatherInfo && reqJuhe && city===lastReqCity){
-        res.json(weatherInfo)
-        return
-    }
-    console.log('请求聚合');
-    axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
-        lastReqTime = new Date().valueOf();
-        lastReqCity = city;
-        response.data.reqTime = formatTime(lastReqTime);
-        weatherInfo = response.data;
-        weatherInfo.ipAdress=ipAdress;
-        res.json(response.data)
+    //var city = encodeURIComponent(req.query.city);
+    
+    
+    var murl = `http://api.map.baidu.com/location/ip?ip=${ip}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
+    axios.get(murl).then(mres => {
+        var city = mres.data.content.address.replace('市', '');
+        var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
+        if (weatherInfo && reqJuhe && city === lastReqCity) {
+            res.json(weatherInfo)
+            return
+        }
+        axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
+            lastReqTime = new Date().valueOf();
+            lastReqCity = city;
+            response.data.reqTime = formatTime(lastReqTime);
+            weatherInfo = response.data;
+            weatherInfo.ipAdress = ipAdress;
+            weatherInfo.city = city+'市';
+            res.json(response.data)
+        })
     })
+
 })
 
 app.listen(80, () => console.log('Example app listening on port 80!'))
