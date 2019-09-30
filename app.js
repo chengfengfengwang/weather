@@ -45,7 +45,7 @@ app.get('/weather', (req, res) => {
     //var city = encodeURIComponent(req.query.city);
     
     
-    var murl = `http://api.map.baidu.com/location/ip?ip=${ip}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
+    var murl = `http://api.map.baidu.com/location/ip?ip=${ipAdress}&ak=i0iMPWgjCyDuVDO7xoQaum0ySlGe79AH`;
     axios.get(murl).then(mres => {
         var city = mres.data.content.address.replace('市', '');
         var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
