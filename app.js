@@ -49,10 +49,10 @@ app.get('/weather', (req, res) => {
     axios.get(murl).then(mres => {
         var city = mres.data.content.address.replace('市', '');
         var reqJuhe = (new Date().valueOf() - lastReqTime) < 1000 * 60 * 10;
-        if (weatherInfo && reqJuhe && city === lastReqCity) {
-            res.json(weatherInfo)
-            return
-        }
+        // if (weatherInfo && reqJuhe && city === lastReqCity) {
+        //     res.json(weatherInfo)
+        //     return
+        // }
         axios.get('http://apis.juhe.cn/simpleWeather/query?city=' + city + '&key=6fc3096e3e5ee9be2370c793621207a1').then(response => {
             lastReqTime = new Date().valueOf();
             lastReqCity = city;
